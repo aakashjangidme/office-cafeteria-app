@@ -39,4 +39,4 @@ const EmployeeSchema = new mongoose.Schema({
 
 
 
-module.exports = mongoose.model('employees', EmployeeSchema);
+module.exports = mongoose.model('Employee', EmployeeSchema);

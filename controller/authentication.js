@@ -4,7 +4,7 @@
  * @desc authentication contorller [login, logout, validate]
  */
 
-const User = require('../models/userModel');
+const User = require('../models/UserModel');
 require('dotenv').config();
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");

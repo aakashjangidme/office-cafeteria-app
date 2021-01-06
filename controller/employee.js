@@ -4,8 +4,8 @@
  * @desc Employee Contoller [Initial Route, Register Employee]
  */
 
-const Employee = require('../models/Employee');
-const User = require('../models/userModel');
+const Employee = require('../models/EmployeeModel');
+const User = require('../models/UserModel');
 require('dotenv').config();
 // const multer = require('multer');
 
@@ -16,6 +16,8 @@ require('dotenv').config();
  * @req   {Header} - x-auth-token : [TOKEN_STRING]
  * @route {GET} - api/v1/employee    - returns simple Welcome user if user not authenticated.
  */
+
+
 
 exports.initial = async (req, res, _) => {
     try {
@@ -109,6 +111,9 @@ exports.registerEmployee = async (req, res, _) => {
         res.status(400).json(data);
 
     }
+}
+
+
 
 
     /*
@@ -123,9 +128,3 @@ exports.registerEmployee = async (req, res, _) => {
     
     var upload = multer({ storage: Storage });
     */
-
-}
-
-
-
-

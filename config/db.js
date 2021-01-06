@@ -1,11 +1,10 @@
-
-const mongoose = require('mongoose');
-require('dotenv').config();
-
 /**
  * @author [Aakash Jangid]
  * @desc [Mongodb connection script]
  */
+
+const mongoose = require('mongoose');
+require('dotenv').config();
 
 const connectDB = async () => {
   try {

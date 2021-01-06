@@ -13,9 +13,9 @@ const UserSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true, minlength: 5 },
     displayName: { type: String },
-    // employees: [{
-    //     type: mongoose.Schema.Types.ObjectId, ref: "Employee"
-    // }]
+    employee: {
+        type: mongoose.Schema.Types.ObjectId, ref: "Employee"
+    }
 });
 
 UserSchema.pre('save', function (next) {
@@ -45,4 +45,4 @@ UserSchema.method.comparePassword = function (_, cb) {
 
 }
 */
-module.exports = User = mongoose.model('users', UserSchema);
+module.exports = User = mongoose.model('User', UserSchema);

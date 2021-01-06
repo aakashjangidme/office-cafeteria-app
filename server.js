@@ -26,6 +26,8 @@ app.use('/api/v1/employee', employees);
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`)
-    console.log(`Click here to open: http://localhost:${PORT}`)
+    console.info(`Server is running on port ${PORT}`)
+    console.info(`Click here to open: http://localhost:${PORT}`)
+}).on("error", (err) => {
+    console.error(err);
 });

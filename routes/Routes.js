@@ -4,8 +4,10 @@
  */
 
 const express = require('express');
-const { login, validateToken } = require('../controller/auth');
+const { login, validateToken } = require('../controller/authentication');
 const { initial, registerEmployee: addEmployee } = require('../controller/employee');
+const { foodList, addFood } = require('../controller/foodList');
+
 const authMiddleWare = require('../middleware/auth')
 
 const router = express.Router();
@@ -21,6 +23,9 @@ router.post('/login', login)
 router.post('/validateToken', validateToken)
 // @desc - register employee w/ other details and password
 router.post('/register', addEmployee)
+router.post('/addFood', addFood)
+router.get('/foodList', foodList)
+
 
 module.exports = router;
 
