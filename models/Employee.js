@@ -1,6 +1,10 @@
 const mongoose = require("mongoose");
 
-
+/**
+ * @author Aakash Jangid
+ * @collection employees
+ * @fields Full Name, Organisation Name, Employee Id No., Email, ID CARD (img)
+ */
 const EmployeeSchema = new mongoose.Schema({
 
     fullName: {
@@ -35,4 +39,4 @@ const EmployeeSchema = new mongoose.Schema({
 
 
 
-module.exports = mongoose.model('Employees', EmployeeSchema);
+module.exports = mongoose.model('employees', EmployeeSchema);

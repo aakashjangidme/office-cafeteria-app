@@ -1,38 +1,31 @@
+/**
+ * @author Aakash Jangid
+ * @mail ajangid25@gmail.com
+ * @desc entry point for server
+ */
 const express = require('express');
 const cookieParser = require('cookie-parser');
-const mongoose = require('mongoose');
-require('dotenv').config();
-const routes = require('./routes/Routes');
-
+const connectDB = require('./config/db')
 let cors = require('cors')
+require('dotenv').config();
+
+connectDB();
+
+const employees = require('./routes/routes')
 
 const app = express()
-
+app.use(express.json())
 app.use(cors())
+// to store the auth token
+app.use(cookieParser());
 
-const uri = process.env.ATLAS_URI;
-const port = process.env.PORT || 5001;
-// using multer for file/ image upload
 app.use(express.static(`${__dirname}/client/public`));
 
-/// to store the auth token
-app.use(cookieParser());
-app.use(express.json());
+app.use('/api/v1/employee', employees);
 
-mongoose.connect(uri, {
-    useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true
-});
+const PORT = process.env.PORT || 5000;
 
-const connection = mongoose.connection;
-connection.once('open', () => {
-    console.log("MongoDB database connection established successfully");
-});
-
-const router = express.Router();
-app.use('/api', router);
-routes(router);
-
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`)
-    console.log(`Click here to open: http://localhost:${port}`)
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`)
+    console.log(`Click here to open: http://localhost:${PORT}`)
 });

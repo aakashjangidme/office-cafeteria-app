@@ -3,31 +3,19 @@ const mongoose = require("mongoose");
 /// To hash the passwords...
 const bcrypt = require('bcrypt');
 
-
+/**
+ * @author Aakash Jangid
+ * @collection users
+ * @fields email, password, display name
+ * @bcrypt salty encryption of 10 on password
+ */
 const UserSchema = new mongoose.Schema({
-    username: {
-        type: String,
-        required: true,
-        min: 6,
-        max: 15,
-    }
-    ,
-    password: {
-        type: String,
-        required: true,
-        min: 6,
-        max: 15,
-
-    },
-    role: {
-        type: String,
-        required: false,
-        enum: ["user", "admin"]
-    },
-    employees: [{
-        type: mongoose.Schema.Types.ObjectId, ref: "Employee"
-    }]
-
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true, minlength: 5 },
+    displayName: { type: String },
+    // employees: [{
+    //     type: mongoose.Schema.Types.ObjectId, ref: "Employee"
+    // }]
 });
 
 UserSchema.pre('save', function (next) {
@@ -42,9 +30,9 @@ UserSchema.pre('save', function (next) {
         next();
     });
 });
-
+/*
 // for testing hashes
-UserSchema.method.comparePassword = function (params, cb) {
+UserSchema.method.comparePassword = function (_, cb) {
     bcrypt.compare(password, this.password, (err, isMatch) => {
         if (err)
             return cb(err);
@@ -56,4 +44,5 @@ UserSchema.method.comparePassword = function (params, cb) {
     })
 
 }
-module.exports = mongoose.model('User', UserSchema);
+*/
+module.exports = User = mongoose.model('users', UserSchema);

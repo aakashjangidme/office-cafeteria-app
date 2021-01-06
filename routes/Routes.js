@@ -1,55 +1,26 @@
-const Employee = require('../models/Employee');
-const multer = require('multer');
+/**
+ * @author Aakash Jangid
+ * @desc contains routes for all api endpoints
+ */
 
-// SET STORAGE
-var Storage = multer.diskStorage({
-    destination: 'client/public/upload',
-    filename: function (_, file, cb) {
-        cb(null, file.fieldname + '-' + Date.now())
-    }
-})
+const express = require('express');
+const { login, validateToken } = require('../controller/auth');
+const { initial, registerEmployee: addEmployee } = require('../controller/employee');
+const authMiddleWare = require('../middleware/auth')
 
-var upload = multer({ storage: Storage });
-
-const routes = (router) => {
-
-    router.route('/').get(function (_, res) {
-        const data = { "data": "Welcome to cafeteria" }
-        res.send(data)
-    });
-
-    router.route('/addEmp').post(function (req, res) {
-        console.log(req.body)
-        let employee = new Employee(req.body);
-        console.log(employee)
-        employee.save()
-            .then(kEmp => {
-                // console.log(kEmp)
-                // If succesful, send this Json with a status of 200 i.e success
-                // along with the registration Id.
-                const data = {
-                    "status": 200,
-                    "registrationId": kEmp._id
-                }
-                res.status(200).json(data);
-            })
-            .catch(err => {
-                console.error(err)
-                // If the post request fails, then send a status of 400 denoting the failure
-                // along with the error message
-                // these error messages can further be customised with [Custom Exception Classes]
-
-                const data = {
-                    "status": 400,
-                    "error": err._message
-                }
-                res.status(400).json(data);
-
-            });
-    });
+const router = express.Router();
 
 
+// if user is in the session then make post request to the / route to get it's detail
+// if not, then just simply perform a get request to get to the page
+router.get('/', initial)
+router.post('/', authMiddleWare, initial)
+// @desc - To login the user w/ email & password.
+router.post('/login', login)
+// @desc - for testing purpose the function can be used anyway!
+router.post('/validateToken', validateToken)
+// @desc - register employee w/ other details and password
+router.post('/register', addEmployee)
 
-}
+module.exports = router;
 
-module.exports = routes;
